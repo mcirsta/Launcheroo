@@ -20,6 +20,9 @@ public slots:
         // open wallpaper picker menu
         void pickWallpaper();
 
+        // time
+        QString time();
+
 public:
 
     // singleton, so we can propagate notifications from java

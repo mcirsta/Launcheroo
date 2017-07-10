@@ -93,3 +93,12 @@ void Platform::pickWallpaper()
 
     #endif
 }
+
+//!
+//! \brief Platform::time
+//! \return system formatted time
+//!
+QString Platform::time()
+{
+    return QtAndroid::androidActivity().callObjectMethod("time", "()Ljava/lang/String;").toString();
+}

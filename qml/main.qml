@@ -26,10 +26,28 @@ Window
     }
 
     // wrapper item used for padding
-    Item
+    ColumnLayout
     {
         anchors.fill: parent
         anchors.margins: 20
+
+        Text
+        {
+            id: clock
+            anchors.right: parent.right
+            font.pixelSize: 20
+            font.italic: true
+            color: "#ffffff"
+
+            Timer
+            {
+                running: true
+                repeat: true
+                triggeredOnStart: true
+                interval: 1000
+                onTriggered: parent.text = __platform.time()
+            }
+        }
 
         // main application grid
         GridView
@@ -40,8 +58,8 @@ Window
 
            focus: true
 
-           height: parent.height
-           width: Math.min(model.length, Math.floor(parent.width/cellWidth)) * cellWidth
+           Layout.fillHeight: true
+           Layout.preferredWidth: Math.min(model.length, Math.floor(parent.width/cellWidth)) * cellWidth
            anchors.horizontalCenter: parent.horizontalCenter
 
            cellWidth: Math.max(Math.min(160, Math.min(parent.width, parent.height) / 5), 80)
