@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QQmlApplicationEngine>
+#include <QString>
 
 class Platform : public QObject
 {
@@ -37,6 +38,7 @@ signals:
     void packagesChanged();
 
 private:
+    const QString desktopFilesPath = "/usr/share/applications";
 };
 
 #endif // PLATFORM_H

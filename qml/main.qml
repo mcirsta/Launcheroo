@@ -6,7 +6,7 @@ import QtQuick.Window 2.11
 Window
 {
     visible: true
-    title: qsTr("LetiHome")
+    title: qsTr("Launcheroo")
 
     // this is set to native resolution on android
     width: 1920
@@ -105,7 +105,7 @@ Window
                {
                    case Qt.Key_Enter:
                    case Qt.Key_Return:
-                       __platform.launchApplication(model[currentIndex].packageName)
+                       __platform.launchApplication(model[currentIndex].appExec)
                        event.accepted = true
                    break
 
@@ -126,7 +126,7 @@ Window
                height: GridView.view.cellHeight - 10
 
                // open application on click
-               onClicked: __platform.launchApplication(modelData.packageName)
+               onClicked: __platform.launchApplication(modelData.appExec)
 
                ColumnLayout
                {
@@ -134,7 +134,17 @@ Window
                    anchors.margins: 15
                    Image
                    {
-                       source: "image://icon/" + modelData.packageName
+                       source:
+                       {
+                            if(modelData.iconFullPath != "")
+                            {
+                                source = "file:///" + modelData.iconFullPath
+                            }
+                            else
+                            {
+                                source = "image://icon/" + modelData.appIcon
+                            }
+                       }
                        Layout.fillWidth: true
                        Layout.fillHeight: true
                        asynchronous: true
@@ -143,7 +153,7 @@ Window
 
                    Text
                    {
-                       text: modelData.applicationName
+                       text: modelData.appName
                        color: "#ffffff"
                        style: Text.Outline
                        Layout.fillWidth: true
