@@ -36,5 +36,5 @@ Makefile*
 
 # QtCtreator CMake
 CMakeLists.txt.user*
-CMakeLists.txt
+
 
