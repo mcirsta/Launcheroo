@@ -3,7 +3,7 @@
 #include <QQmlContext>
 
 #include "platform.h"
-#include "iconprovider.h"
+#include "xdgiconloader_p.h"
 
 int main(int argc, char *argv[])
 {
