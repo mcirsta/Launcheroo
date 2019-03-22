@@ -134,17 +134,8 @@ Window
                    anchors.margins: 15
                    Image
                    {
-                       source:
-                       {
-                            if(modelData.iconFullPath != "")
-                            {
-                                source = "file:///" + modelData.iconFullPath
-                            }
-                            else
-                            {
-                                source = "image://icon/" + modelData.appIcon
-                            }
-                       }
+                       source: "file:///" + modelData.iconFullPath
+                       
                        Layout.fillWidth: true
                        Layout.fillHeight: true
                        asynchronous: true

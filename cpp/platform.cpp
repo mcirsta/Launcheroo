@@ -4,8 +4,10 @@
 #include <QDebug>
 #include <iostream>
 #include <QFile>
+#include <QProcess>
 
 #include "platform.h"
+#include <private/xdgiconloader/xdgiconloader_p.h>
 
 
 
@@ -30,11 +32,24 @@ QVariantList Platform::applicationList()
         auto appIcon = desktopSetting.value("Icon", "NO_ICON_FOUND");
         if(appTerminal != "true" && appNoDisplay != "true" && appIcon != "NO_ICON_FOUND") {
             auto appName = desktopSetting.value("Name");
-            auto appExec = desktopSetting.value("Exec");
+            QString appExec = desktopSetting.value("Exec").toString();
+
+            appExec.remove("%U");
+            appExec.remove("%u");
+
+
             QFile iconFile(appIcon.toString());
             if(iconFile.exists()) {
                 iconFullPath = appIcon;
                 std::cout<< appIcon.toString().toStdString() <<std::endl;
+            }
+            else {
+                const auto info = XdgIconLoader::instance()->loadIcon(appIcon.toString());
+                const auto entries = info.entries;
+                for (const auto &i : entries) {
+                    std::cout << "\t" << qPrintable(i->filename) << "\n";
+                    iconFullPath = i->filename;
+                }
             }
             QVariantMap data;
             data["appName"] = appName;
@@ -55,7 +70,9 @@ QVariantList Platform::applicationList()
 // launch application by package name
 void Platform::launchApplication(const QString &packageName)
 {
-    Q_UNUSED(packageName);
+    QProcess launchApp(this);
+    std::cout<< packageName.toStdString() << std::endl;
+    launchApp.startDetached(packageName);
 }
 
 // open wallpaper picker menu

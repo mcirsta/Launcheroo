@@ -3,10 +3,12 @@
 #include <QQmlContext>
 
 #include "platform.h"
-#include "xdgiconloader_p.h"
+#include <private/qiconloader_p.h>
+
 
 int main(int argc, char *argv[])
 {
+    QIconLoader::instance()->setThemeName("breeze");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
@@ -14,7 +16,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     // expose C++ classes to QML
-    engine.addImageProvider(QLatin1String("icon"), new ImageProvider());
     engine.rootContext()->setContextProperty("__platform", &Platform::instance());
 
     // load main file
