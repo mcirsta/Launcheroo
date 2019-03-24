@@ -1,5 +1,5 @@
-#ifndef PLATFORM_H
-#define PLATFORM_H
+#ifndef PLATFORM_HPP
+#define PLATFORM_HPP
 
 #include <QObject>
 #include <QPointer>
@@ -41,4 +41,4 @@ private:
     const QString desktopFilesPath = "/usr/share/applications";
 };
 
-#endif // PLATFORM_H
+#endif // PLATFORM_HPP

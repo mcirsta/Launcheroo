@@ -1,13 +1,12 @@
-#include <QImage>
 #include <QDir>
 #include <QSettings>
 #include <QDebug>
 #include <iostream>
-#include <QFile>
 #include <QProcess>
 
-#include "platform.h"
-#include <private/xdgiconloader/xdgiconloader_p.h>
+#include "platform.hpp"
+
+#include "iconprovider.hpp"
 
 
 
@@ -34,23 +33,11 @@ QVariantList Platform::applicationList()
             auto appName = desktopSetting.value("Name");
             QString appExec = desktopSetting.value("Exec").toString();
 
-            appExec.remove("%U");
-            appExec.remove("%u");
+            //remove %U, %F ... args as we're not passing anything using these placeholders
+            appExec.remove(QRegularExpression("%[a-zA-z]"));
 
+            iconFullPath = IconProvider::getIcon(appIcon.toString());
 
-            QFile iconFile(appIcon.toString());
-            if(iconFile.exists()) {
-                iconFullPath = appIcon;
-                std::cout<< appIcon.toString().toStdString() <<std::endl;
-            }
-            else {
-                const auto info = XdgIconLoader::instance()->loadIcon(appIcon.toString());
-                const auto entries = info.entries;
-                for (const auto &i : entries) {
-                    std::cout << "\t" << qPrintable(i->filename) << "\n";
-                    iconFullPath = i->filename;
-                }
-            }
             QVariantMap data;
             data["appName"] = appName;
             data["fullPath"] = fullPath;

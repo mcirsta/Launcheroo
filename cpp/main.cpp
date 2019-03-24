@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "platform.h"
+#include "platform.hpp"
 #include <private/qiconloader_p.h>
 
 

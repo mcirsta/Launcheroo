@@ -1,10 +1,12 @@
 set("${CMAKE_PROJECT_NAME}_SOURCES"
        main.cpp
        platform.cpp
+       iconprovider.cpp
 )
 
 set("${CMAKE_PROJECT_NAME}_HEADERS"
-       platform.h
+       platform.hpp
+       iconprovider.hpp
 )
 
 find_package(Qt5XdgIconLoader ${QTXDG_MINIMUM_VERSION} REQUIRED)
